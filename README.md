@@ -12,10 +12,9 @@ The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweigh
 
 ## ✨ TL;DR:
 
-This repository is a [GitHub template](https://github.com/airoh-pipeline/airoh-template/generate). Click **“Use this template”** to create your own analysis project.
+This repository is a [GitHub template](https://github.com/airoh-pipeline/airoh-template/generate). Click **”Use this template”** to create your own analysis project.
 ```bash
-pip install -r setup.txt
-invoke setup
+pip install -r requirements.txt
 invoke fetch
 invoke run
 ```
@@ -25,23 +24,24 @@ Voilà — from clone to full reproduction.
 
 ## 🚀 Quick Start
 
-### **Step 1**: Setup the project dependencies
+### **Step 1**: Install dependencies
 
-If you are using `pip`, for instance in a virtual environment:
+Using `uv` (recommended):
+```bash
+uv pip install -r requirements.txt
 ```
-bash
-pip install -r setup.txt
-invoke setup
-```
-The initial call to `pip`is for core `airod` dependencies. The call to `invoke run` uses `pip install` under the hood with the provided requirements file, but that step can be made much more complex in `tasks.py`.
 
-If you are using `conda`:
+Using `pip` (e.g. in a virtual environment):
+```bash
+pip install -r requirements.txt
 ```
-bash
+
+Using `conda`:
+```bash
 conda env create -n airoh_env -f environment.yml
 conda activate airoh_env
-invoke setup
 ```
+
 ---
 
 
@@ -162,7 +162,6 @@ By default, the template excludes `source_data/` and `output_data/` from Git. If
 
 | Task             | Description                                                    |
 | ---------------- | -------------------------------------------------------------- |
-| `setup`          | Installs Python dependencies from `requirements.txt`           |
 | `fetch`          | Downloads dataset using Datalad and config in `invoke.yaml`    |
 | `run`            | Executes Jupyter notebooks for each figure                     |
 | `clean`          | Removes the `output_data_dir` contents                         |

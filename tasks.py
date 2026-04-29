@@ -3,15 +3,6 @@ from pathlib import Path
 from invoke import task
 from airoh.containers import docker_run, docker_build, docker_archive, docker_setup
 
-@task
-def setup(c):
-    """
-    Setup all the requirements.
-    """
-    from airoh.utils import setup_env_python
-    setup_env_python(c, "requirements.txt")
-    print(f"✨ Setup complete!")
-
 @task(
     help={
         "name": "Nom logique du fichier, tel que défini dans la section 'files' de invoke.yaml."
