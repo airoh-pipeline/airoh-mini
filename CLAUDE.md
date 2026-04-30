@@ -49,6 +49,8 @@ invoke --list             # Show all available tasks
 - `tasks.py` — project-specific invoke tasks; imports reusable tasks from `airoh.utils`
 - `analysis/simulation.py` — pure Python analysis logic; called by `run_simulation` task
 - `notebooks/` — Jupyter notebooks executed by `run_notebooks` via `airoh.utils.run_notebooks`; notebooks receive `OUTPUT_DATA_DIR` and `SOURCE_DATA_DIR` as environment variables
-- `source_data/` and `output_data/` — excluded from Git by `.gitignore`
+- `source_data/` and `output_data/` — excluded from Git by `.gitignore`; see their `CONTENT.md` files for what each folder contains (these are the authoritative docs for data structure)
 
 **Adding a new analysis step:** add a function to `analysis/`, create or extend a notebook in `notebooks/`, add an invoke task in `tasks.py`, and wire it into the `pre=` chain on `run`.
+
+**README.md** is the user-facing documentation for this project. Any structural or workflow changes — new tasks, renamed folders, updated commands, new dependencies — must be reflected there.
