@@ -1,5 +1,4 @@
 # invoke.yaml
-docker_image: airoh-template
 
 # Code folder
 code_dir: code

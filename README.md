@@ -2,7 +2,7 @@
 
 _why don't you have a cup of relaxing jasmine tea?_
 
-This repository provides a minimal, modular, and **fully reproducible** template for scientific workflows. Built on the [`invoke`](https://www.pyinvoke.org/) task runner, [datalad](https://www.datalad.org/) for data management as well as containerization tools (Docker or Apptainer), it lets you go from clean clone to output figures with just a few commands.
+This repository is a template for structuring a reproducible data analysis. Built on the [`invoke`](https://www.pyinvoke.org/) task runner and [datalad](https://www.datalad.org/) for data management, it lets you go from clean clone to output figures with just a few commands.
 
 The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweight, pip-installable Python package of reusable `invoke` tasks. This repository runs small analyses just to demonstrate how the `airoh-template` works. It should be easy to adapt to a variety of other projects.
 
@@ -53,7 +53,7 @@ bash
 invoke fetch
 ```
 
-This uses Datalad under the hood to retrieve the configured file(s) listed in `invoke.yaml`.
+This downloads the configured file(s) listed under `files:` in `invoke.yaml`.
 
 ---
 
@@ -68,40 +68,7 @@ This will execute a full analysis pipeline (simulation + figures).
 
 ---
 
-### **Step 4**: Build and archive a Docker image (optional)
-
-If you want to freeze the environment:
-
-```
-bash
-invoke docker-build
-invoke docker-archive
-```
-
-This will save your image to a `.tar.gz` archive that can later be loaded with `docker-setup`:
-
-```
-bash
-invoke docker-setup
-```
-Note that the name of the docker image is configured through `invoke.yml`.
-
----
-
-### **Step 5**: Run inside container (optional)
-
-Once built or loaded:
-
-```
-bash
-invoke docker-run --task run
-```
-
-This re-runs your pipeline inside the container.
-
----
-
-### **Step 6**: Clean output data
+### **Step 4**: Clean output data
 
 ```
 bash
@@ -116,7 +83,6 @@ Removes the output folder listed in `invoke.yaml` under `output_data_dir`.
 
 * Modular `tasks.py` that imports reusable code from `airoh`
 * Minimal and readable `invoke.yaml` configuration file
-* Optional containerization for full reproducibility
 * Real output notebooks & figures — ready to publish
 
 ---
@@ -160,15 +126,11 @@ By default, the template excludes `source_data/` and `output_data/` from Git. If
 
 ## 🧰 Task Overview
 
-| Task             | Description                                                    |
-| ---------------- | -------------------------------------------------------------- |
-| `fetch`          | Downloads dataset using Datalad and config in `invoke.yaml`    |
-| `run`            | Executes Jupyter notebooks for each figure                     |
-| `clean`          | Removes the `output_data_dir` contents                         |
-| `docker-build`   | Builds a Docker image from the current repo                    |
-| `docker-archive` | Archives the Docker image into a `.tar.gz` for sharing         |
-| `docker-setup`   | Loads a prebuilt image from a `.tar.gz` archive (e.g., Zenodo) |
-| `docker-run`     | Runs any task inside the Docker image                          |
+| Task    | Description                                                 |
+| ------- | ----------------------------------------------------------- |
+| `fetch` | Downloads dataset using Datalad and config in `invoke.yaml` |
+| `run`   | Executes Jupyter notebooks for each figure                  |
+| `clean` | Removes the `output_data_dir` contents                      |
 
 Use `invoke --list` or `invoke --help <task>` for descriptions and usage.
 
@@ -191,15 +153,6 @@ Use `invoke --list` or `invoke --help <task>` for descriptions and usage.
 | `output_data/` | Generated results and figures            |
 | `tasks.py`     | Project-specific invoke entrypoint       |
 | `invoke.yaml`  | Config file for all reusable tasks       |
-
----
-
-## 🧪 Want to use containers?
-
-- Build: invoke docker-build
-- Archive: invoke docker-archive
-- Run: invoke docker-run --task run
-- Setup from archive: invoke docker-setup
 
 ---
 
