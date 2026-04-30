@@ -110,11 +110,11 @@ Use `invoke --list` or `invoke --help <task>` for descriptions and usage.
 
 ## 📁 Folder Structure
 
-| Folder         | Description                              |
+| Folder / File  | Description                              |
 | -------------- | ---------------------------------------- |
 | `notebooks/`   | Jupyter notebooks (e.g., one per figure) |
-| `source_data/` | Raw source datasets                      |
-| `output_data/` | Generated results and figures            |
+| `source_data/` | Raw source datasets — see [`source_data/CONTENT.md`](source_data/CONTENT.md) |
+| `output_data/` | Generated results and figures — see [`output_data/CONTENT.md`](output_data/CONTENT.md) |
 | `tasks.py`     | Project-specific invoke entrypoint       |
 | `invoke.yaml`  | Config file for all reusable tasks       |
 
