@@ -8,5 +8,4 @@ Once the pipeline is run, this folder will contain the following:
 
 📝 Note: csv and png files in this folder are **ignored by Git** (see `.gitignore`), so outputs won't be tracked by default.
 
-💡 If you need to track large or versioned outputs, consider using [DataLad](https://www.datalad.org/) instead.
 

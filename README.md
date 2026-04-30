@@ -2,7 +2,7 @@
 
 _why don't you have a cup of relaxing jasmine tea?_
 
-This repository is a template for structuring a reproducible data analysis. Built on the [`invoke`](https://www.pyinvoke.org/) task runner and [datalad](https://www.datalad.org/) for data management, it lets you go from clean clone to output figures with just a few commands.
+This repository is a template for structuring a reproducible data analysis. Built on the [`invoke`](https://www.pyinvoke.org/) task runner, it lets you go from clean clone to output figures with just a few commands.
 
 The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweight, pip-installable Python package of reusable `invoke` tasks. This repository runs small analyses just to demonstrate how the `airoh-template` works. It should be easy to adapt to a variety of other projects.
 
@@ -87,48 +87,11 @@ Removes the output folder listed in `invoke.yaml` under `output_data_dir`.
 
 ---
 
-## 📦 Using Datalad for Large Files
-
-This template supports `datalad` to manage large assets (e.g., Docker images, datasets). To avoid bloating your Git repository:
-
-1. Make sure the repo is initialized with Datalad:
-
-   ```bash
-   datalad create --force
-   ```
-
-2. Make sure `.gitattributes` is configured to match your needs. For example, this template excludes large Docker archives using:
-
-   ```text
-   *.tar.gz annex.largefiles=(largerthan=10MB)
-   ```
-
-3. Add and save your large files with:
-
-   ```bash
-   datalad add output_data/your-archive.tar.gz
-   datalad save -m "Added archive with git-annex"
-   ```
-
-4. To verify that the file is tracked by `git-annex`, run:
-
-   ```bash
-   git annex whereis output_data/your-archive.tar.gz
-   ```
-
-If you're working with Zenodo or other public sources, you can also configure `invoke.yaml` to fetch and extract archives via `invoke fetch`.
-
-You can add entries under the `files:` section in `invoke.yaml` to automate downloads using `invoke fetch`.
-
-By default, the template excludes `source_data/` and `output_data/` from Git. If you prefer to track them, you can manage them with Datalad instead.
-
----
-
 ## 🧰 Task Overview
 
 | Task    | Description                                                 |
 | ------- | ----------------------------------------------------------- |
-| `fetch` | Downloads dataset using Datalad and config in `invoke.yaml` |
+| `fetch` | Downloads dataset using config in `invoke.yaml` |
 | `run`   | Executes Jupyter notebooks for each figure                  |
 | `clean` | Removes the `output_data_dir` contents                      |
 
@@ -164,4 +127,4 @@ Submit an issue or PR on [`airoh`](https://github.com/SIMEXP/airoh).
 
 ## Philosophy
 
-Inspired by Uncle Iroh from *Avatar: The Last Airbender*, `airoh` aims to bring simplicity, reusability, and clarity to research infrastructure — one well-structured task at a time. It is meant to support a concrete implementation of the [YODA principles](https://handbook.datalad.org/en/latest/basics/101-127-yoda.html).
+Inspired by Uncle Iroh from *Avatar: The Last Airbender*, `airoh` aims to bring simplicity, reusability, and clarity to research infrastructure — one well-structured task at a time.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is the `airoh-mini` template — a starting point for structuring a reproducible data analysis. It is built on the [`invoke`](https://www.pyinvoke.org/) task runner and [datalad](https://www.datalad.org/) for data management. The `airoh` pip package provides reusable invoke tasks; this repo customizes them via `tasks.py` and `invoke.yaml`.
+This is the `airoh-mini` template — a starting point for structuring a reproducible data analysis. It is built on the [`invoke`](https://www.pyinvoke.org/) task runner. The `airoh` pip package provides reusable invoke tasks; this repo customizes them via `tasks.py` and `invoke.yaml`.
 
 ## Setup
 
@@ -33,8 +33,6 @@ invoke --list             # Show all available tasks
 - `tasks.py` — project-specific invoke tasks; imports reusable tasks from `airoh.utils`
 - `code/simulation.py` — pure Python analysis logic; called by `run_simulation` task
 - `notebooks/` — Jupyter notebooks executed by `run_figure` via `airoh.utils.run_figures`; notebooks receive `OUTPUT_DATA_DIR` and `SOURCE_DATA_DIR` as environment variables
-- `source_data/` and `output_data/` — excluded from Git by `.gitignore`; use DataLad to track large files
+- `source_data/` and `output_data/` — excluded from Git by `.gitignore`
 
 **Adding a new analysis step:** add a function to `code/`, create or extend a notebook in `notebooks/`, add an invoke task in `tasks.py`, and wire it into the `pre=` chain on `run`.
-
-**DataLad** manages large binary files. The `.gitattributes` file controls which files go to git-annex.
