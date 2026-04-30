@@ -9,13 +9,29 @@ This is the `airoh-mini` template — a starting point for structuring a reprodu
 ## Setup
 
 ```bash
+# uv (recommended):
+uv sync
+
+# pip:
 pip install -r requirements.txt
-# or with conda:
+
+# conda:
 conda env create -n airoh_env -f environment.yml && conda activate airoh_env
 ```
 
 ## Common Commands
 
+With `uv`:
+```bash
+uv run invoke fetch           # Download source data
+uv run invoke run             # Full pipeline: run_simulation → run_notebooks
+uv run invoke run-simulation  # Generate simulation_output.csv in output_data/
+uv run invoke run-notebooks   # Execute notebooks, save figures to output_data/
+uv run invoke clean           # Remove *.png and *.csv from output_data/
+uv run invoke --list          # Show all available tasks
+```
+
+Without `uv` (activate your environment first):
 ```bash
 invoke fetch              # Download source data (configured in invoke.yaml under files:)
 invoke run                # Full pipeline: run_simulation → run_notebooks

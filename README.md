@@ -14,9 +14,9 @@ The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweigh
 
 This repository is a [GitHub template](https://github.com/airoh-pipeline/airoh-template/generate). Click **”Use this template”** to create your own analysis project.
 ```bash
-pip install -r requirements.txt
-invoke fetch
-invoke run
+uv sync
+uv run invoke fetch
+uv run invoke run
 ```
 Voilà — from clone to full reproduction.
 
@@ -28,8 +28,9 @@ Voilà — from clone to full reproduction.
 
 Using `uv` (recommended):
 ```bash
-uv pip install -r requirements.txt
+uv sync
 ```
+This creates a `.venv` and installs all dependencies from `pyproject.toml`.
 
 Using `pip` (e.g. in a virtual environment):
 ```bash
