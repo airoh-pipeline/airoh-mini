@@ -15,7 +15,7 @@ def run_simulation(c):
     Run a small simulation.
     """
     output_dir = Path(c.config.get("output_data_dir"))
-    from code.simulation import simulation
+    from analysis.simulation import simulation
     simulation(output_dir)
 
 @task(pre=[run_simulation])

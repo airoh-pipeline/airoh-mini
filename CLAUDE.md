@@ -47,8 +47,8 @@ invoke --list             # Show all available tasks
 
 - `invoke.yaml` — all path and data config (`output_data_dir`, `source_data_dir`, `notebooks_dir`, `files:` for downloads)
 - `tasks.py` — project-specific invoke tasks; imports reusable tasks from `airoh.utils`
-- `code/simulation.py` — pure Python analysis logic; called by `run_simulation` task
+- `analysis/simulation.py` — pure Python analysis logic; called by `run_simulation` task
 - `notebooks/` — Jupyter notebooks executed by `run_notebooks` via `airoh.utils.run_notebooks`; notebooks receive `OUTPUT_DATA_DIR` and `SOURCE_DATA_DIR` as environment variables
 - `source_data/` and `output_data/` — excluded from Git by `.gitignore`
 
-**Adding a new analysis step:** add a function to `code/`, create or extend a notebook in `notebooks/`, add an invoke task in `tasks.py`, and wire it into the `pre=` chain on `run`.
+**Adding a new analysis step:** add a function to `analysis/`, create or extend a notebook in `notebooks/`, add an invoke task in `tasks.py`, and wire it into the `pre=` chain on `run`.
