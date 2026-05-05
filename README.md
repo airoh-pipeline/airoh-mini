@@ -4,7 +4,7 @@ _why don't you have a cup of relaxing jasmine tea?_
 
 This repository is a template for structuring a reproducible data analysis. Built on the [`invoke`](https://www.pyinvoke.org/) task runner, it lets you go from clean clone to output figures with just a few commands.
 
-The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweight, pip-installable Python package of reusable `invoke` tasks. This repository runs small analyses just to demonstrate how the `airoh-template` works. It should be easy to adapt to a variety of other projects.
+The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweight, pip-installable Python package of reusable `invoke` tasks. This repository runs a small demo analysis to show how the template works. It should be easy to adapt to a variety of projects.
 
 ⚠️ **Status**: This template is in its early days. Expect rapid iteration and changes.
 
@@ -12,7 +12,7 @@ The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweigh
 
 ## ✨ TL;DR:
 
-This repository is a [GitHub template](https://github.com/airoh-pipeline/airoh-template/generate). Click **”Use this template”** to create your own analysis project.
+This repository is a [GitHub template](https://github.com/airoh-pipeline/airoh-template/generate). Click **"Use this template"** to create your own analysis project.
 ```bash
 uv sync
 uv run invoke fetch
@@ -45,66 +45,63 @@ conda activate airoh_env
 
 ---
 
-
----
 ### **Step 2**: Fetch the source data
 
-```
-bash
+```bash
 invoke fetch
 ```
 
-This downloads the configured file(s) listed under `files:` in `invoke.yaml`.
+Downloads the configured file(s) listed under `files:` in `invoke.yaml`.
 
 ---
 
-### **Step 3**: Run the analysis pipeline
+### **Step 3**: Run the full pipeline
 
-```
-bash
+```bash
 invoke run
 ```
 
-This will execute a full analysis pipeline (simulation + figures).
+Runs the full analysis pipeline in order. Steps that have already produced output are skipped automatically — only missing outputs are recomputed. To force a full rerun from scratch:
 
----
-
-### **Step 4**: Clean output data
-
-```
-bash
+```bash
 invoke clean
+invoke run
 ```
-
-Removes the output folder listed in `invoke.yaml` under `output_data_dir`.
 
 ---
 
-## 🧠 Core Features
+### **Step 4**: Clean outputs
 
-* Modular `tasks.py` that imports reusable code from `airoh`
-* Minimal and readable `invoke.yaml` configuration file
-* Real output notebooks & figures — ready to publish
+```bash
+invoke clean          # remove all outputs
+invoke clean-{name}   # remove outputs of one specific step
+```
+
+---
+
+## 🧠 Design principles
+
+Airoh projects follow a few conventions that keep analyses fast, reproducible, and easy to pick up:
+
+- **Analysis in code, visualization in notebooks.** Heavy computation lives in `analysis/` Python modules and is run by `invoke` tasks. Notebooks only read results and produce figures — so they stay fast.
+- **Idempotent steps.** Each `run-{name}` task checks whether its outputs already exist and skips if they do. You can call `invoke run` repeatedly while working on a later step without re-running earlier ones.
+- **Mirrored clean tasks.** Every `run-{name}` has a matching `clean-{name}` that removes only its outputs. The top-level `clean` calls them all.
+- **Smoke test.** Tasks support a `--smoke` flag for a fast minimal run to verify the pipeline end-to-end.
 
 ---
 
 ## 🧰 Task Overview
 
-| Task    | Description                                                 |
-| ------- | ----------------------------------------------------------- |
-| `fetch` | Downloads dataset using config in `invoke.yaml` |
-| `run`   | Executes Jupyter notebooks for each figure                  |
-| `clean` | Removes the `output_data_dir` contents                      |
+| Task             | Description                                              |
+| ---------------- | -------------------------------------------------------- |
+| `fetch`          | Downloads source data configured in `invoke.yaml`        |
+| `run`            | Runs the full pipeline (all `run-{name}` steps in order) |
+| `run-{name}`     | Runs one analysis step; skips if outputs already exist   |
+| `run-notebooks`  | Executes notebooks and saves figures to `output_data/`   |
+| `clean`          | Removes all generated outputs                            |
+| `clean-{name}`   | Removes outputs of one specific step                     |
 
 Use `invoke --list` or `invoke --help <task>` for descriptions and usage.
-
----
-
-## 🧭 Tips
-
-* Use `invoke --complete` for tab-completion support
-* Configure paths and data sources in `invoke.yaml`
-* To use this template for a new project, start from [`airoh-template`](https://github.com/SIMEXP/airoh-template) and customize `tasks.py` + `invoke.yaml`
 
 ---
 
@@ -112,11 +109,20 @@ Use `invoke --list` or `invoke --help <task>` for descriptions and usage.
 
 | Folder / File  | Description                              |
 | -------------- | ---------------------------------------- |
-| `notebooks/`   | Jupyter notebooks (e.g., one per figure) |
+| `analysis/`    | Pure Python analysis logic, called by invoke tasks |
+| `notebooks/`   | Jupyter notebooks for visualization (one per figure) |
 | `source_data/` | Raw source datasets — see [`source_data/CONTENT.md`](source_data/CONTENT.md) |
 | `output_data/` | Generated results and figures — see [`output_data/CONTENT.md`](output_data/CONTENT.md) |
-| `tasks.py`     | Project-specific invoke entrypoint       |
-| `invoke.yaml`  | Config file for all reusable tasks       |
+| `tasks.py`     | Project-specific invoke tasks            |
+| `invoke.yaml`  | Config: paths, data sources, parameters  |
+
+---
+
+## 🧭 Tips
+
+* Use `invoke --complete` for tab-completion support
+* Configure paths and data sources in `invoke.yaml`
+* To use this template for a new project, start from [`airoh-template`](https://github.com/airoh-pipeline/airoh-template) and customize `tasks.py` + `invoke.yaml`
 
 ---
 
