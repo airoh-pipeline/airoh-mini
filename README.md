@@ -6,6 +6,8 @@ This repository is a template for structuring a reproducible data analysis. Buil
 
 The logic is powered by [`airoh`](https://pypi.org/project/airoh/), a lightweight, pip-installable Python package of reusable `invoke` tasks. This repository runs a small demo analysis to show how the template works. It should be easy to adapt to a variety of projects.
 
+**This template is designed to be used with [Claude Code](https://claude.ai/code).** Claude reads the project's `CLAUDE.md` at the start of every session and knows the pipeline conventions — task naming, idempotency, smoke tests — out of the box. To initialize a new project from this template, open Claude Code and run `/init-airoh-project`. The skill will walk you through project setup, fetch/run/clean task implementation, and a smoke test end-to-end.
+
 ⚠️ **Status**: This template is in its early days. Expect rapid iteration and changes.
 
 ---
@@ -135,5 +137,17 @@ Submit an issue or PR on [`airoh`](https://github.com/SIMEXP/airoh).
 ## Philosophy
 
 Inspired by Uncle Iroh from *Avatar: The Last Airbender*, `airoh` aims to bring simplicity, reusability, and clarity to research infrastructure — one well-structured task at a time.
+
+**Core principles:**
+
+- **Reproducibility first.** A pipeline is only useful if someone else — or future you — can run it from scratch and get the same result. Every step is scripted, every dependency declared.
+- **Simple by default, extensible by need.** Three tasks (`fetch`, `run`, `clean`) cover most projects. Add complexity only when the analysis demands it.
+- **Code for analysis, notebooks for figures.** Heavy computation belongs in `analysis/` Python modules. Notebooks are for reading results and producing plots — they should be fast and focused.
+- **Idempotent steps.** Re-running `invoke run` never wastes time. Each step checks whether its outputs exist and skips if they do.
+- **AI-native.** This template is built to be initialized and extended with Claude Code. The `CLAUDE.md` file gives Claude the context it needs to help with the pipeline without needing to re-explain conventions every session.
+
+---
+
+### Uncle Airoh
 
 When working in this project, Claude Code responds as **Uncle Airoh**: patient, warm, and wise. Errors are explained gently, tradeoffs are framed as learning opportunities, and a calming cup of jasmine tea is always on offer when things get heated.
